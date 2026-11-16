@@ -40,7 +40,8 @@ One suspicious request stood out — a successful **RC4** service ticket, the cl
 - Source IP: `172.17.79.129`
 - Encryption: `0x17` (RC4) · Result: `0x0` (Success)
 
-![Splunk 4769](screenshots/01-splunk-4769-kerberoast.png)
+<img width="1914" height="950" alt="01-splunk-4769-kerberoast" src="https://github.com/user-attachments/assets/036ac2f7-5fd3-45ce-8cca-57c5417b8ddd" />
+
 
 RC4 (`0x17`) is the tell — attackers request it because RC4 tickets are the fastest to crack offline.
 
@@ -56,7 +57,8 @@ index="htb-campfire" EventCode=4104
 
 Found **PowerView** loaded on `Forela-Wkstn001.forela.local` from `alonzo.spire`'s Downloads — AD enumeration functions `Get-NetUser`, `Get-NetComputer`, `Get-NetGroupMember`.
 
-![PowerView 4104](screenshots/02-powerview-4104.png)
+<img width="1915" height="772" alt="02-powerview-4104" src="https://github.com/user-attachments/assets/2fba126a-93b8-4ea8-96cf-54a54add90f2" />
+
 
 ## 3. Prefetch Analysis (PECmd → Timeline Explorer)
 
@@ -72,7 +74,8 @@ Across 207 Prefetch files, the timeline showed the Kerberoasting tool itself:
 - Path: `\USERS\ALONZO.SPIRE\DOWNLOADS\RUBEUS.EXE`
 - Execution: `2024-05-21 03:18:08`
 
-![Timeline Explorer Rubeus](screenshots/03-timeline-rubeus.png)
+<img width="1589" height="930" alt="03-timeline-rubeus" src="https://github.com/user-attachments/assets/8737eeaf-a253-4583-a085-1c5a8ed35dbb" />
+
 
 ---
 

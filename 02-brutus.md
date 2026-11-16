@@ -31,7 +31,8 @@ utmp.py wtmp               -> manual terminal login timestamp
 
 Uploaded `auth.log` into Splunk as sourcetype `linux_secure` — 385 events, fields parsing cleanly. Directory Monitor failed with "Path is not readable" (Splunk's service account can't read a user profile's Downloads), so **Add Data → Upload** is the right input for a single static artifact.
 
-<img width="1901" height="906" alt="01-splunk-ingest-385-events-linux_secure" src="screenshots/01-splunk-ingest-385-events-linux_secure.png" />
+<img width="1901" height="906" alt="01-splunk-ingest-385-events-linux_secure" src="https://github.com/user-attachments/assets/7f9d83f8-fe02-4f39-b6d9-5894cc4f0f1b" />
+
 
 ## 2. Identifying the Brute Force (Task 1)
 

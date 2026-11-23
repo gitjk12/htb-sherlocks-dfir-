@@ -42,9 +42,11 @@ Sysmon EventID `1` (process created) grouped by `Image` shows three candidates: 
 EventID=3 | stats count by Image
 ```
 
-![Executables](shots/task1-executables.png)
+<img width="1907" height="933" alt="task1-executables" src="https://github.com/user-attachments/assets/39f3a824-979b-4fc2-b458-66988214135a" />
 
-![First merlin connection](shots/task1-task5-merlin-first-connection.png)
+
+<img width="1905" height="916" alt="task1-task5-merlin-first-connection" src="https://github.com/user-attachments/assets/e592e065-2195-4a95-b6d3-be198255b842" />
+
 
 ### Task 2: Session ID of the initial access
 
@@ -52,7 +54,8 @@ EventID=3 | stats count by Image
 
 The TeamViewer log is plain text. The line `SessionManagerDesktop::IncomingConnection: Connection incoming, sessionID = -2102926010` marks the incoming connection. It is in `TeamViewer15_Logfile.log` (in the collection under `C/Users/gladys/AppData/Local/TeamViewer/Logs/`).
 
-![TeamViewer session](shots/task2-task8-teamviewer-session-start.png)
+<img width="1121" height="486" alt="task2-task8-teamviewer-session-start" src="https://github.com/user-attachments/assets/924ef5e3-ee00-4bde-a425-e792aedd60cf" />
+
 
 ### Task 3: Password the attacker tried to set as the BitLocker password
 
@@ -64,9 +67,11 @@ Searching Sysmon EventID `1` for "bitlocker" returned nothing, because the attac
 EventID=1 "-e" | stats count by CommandLine, _time
 ```
 
-![No results for "bitlocker"](shots/task3-bitlocker-no-results.png)
+<img width="1909" height="960" alt="task3-bitlocker-no-results" src="https://github.com/user-attachments/assets/2ec49dd2-60f8-4ad6-b2b0-6edddec218c9" />
 
-![Encoded commands](shots/task3-encoded-commands.png)
+
+<img width="1908" height="561" alt="task3-encoded-commands" src="https://github.com/user-attachments/assets/06a8ecff-440e-4d3e-889e-1242f3d23e8f" />
+
 
 Decoding the Base64 (UTF-16LE) gives:
 
@@ -83,7 +88,8 @@ What it does: the first line turns the plain-text password into a secure string.
 
 TeamViewer logs every participant in a session. In the same log, `CParticipantManagerBase participant fritjof olfasson (ID [1761879737,-207968498]) was added` shows the remote participant for session `-2102926010`, and the name appears again when the session ends.
 
-![Participant](shots/task4-teamviewer-participant.png)
+<img width="1118" height="483" alt="task4-teamviewer-participant" src="https://github.com/user-attachments/assets/5e36dc9d-7e28-4449-8363-5498a8316ae6" />
+
 
 ### Task 5: IP address the C2 connected back to
 
@@ -95,7 +101,8 @@ Sysmon EventID `3` (network connection) from `merlin.exe`, grouped by `Destinati
 EventID=3 Image="*merlin.exe" | stats count by DestinationIp
 ```
 
-![Destination IP](shots/task5-destination-ip.png)
+<img width="1903" height="582" alt="task5-destination-ip" src="https://github.com/user-attachments/assets/b059c70e-89eb-4f89-9dc8-c3e7c67d9019" />
+
 
 ### Task 6: Category Windows Defender gave the C2 binary
 
@@ -107,7 +114,8 @@ Searching the Defender log for "merlin" returns one `Threat Name`. The format is
 log="Microsoft-Windows-Windows Defender%4Operational" "merlin" | stats count by "Threat Name"
 ```
 
-![Threat name](shots/task6-threat-name.png)
+<img width="1910" height="750" alt="task6-threat-name" src="https://github.com/user-attachments/assets/f5412853-a7ac-48fe-89f7-a67968fef70e" />
+
 
 ### Task 7: PowerShell script the attackers used to manipulate time
 
@@ -119,7 +127,8 @@ Sysmon EventID `11` (file created) filtered to `*.ps1` shows 10 scripts. Most ar
 EventID=11 TargetFilename="*.ps1" | stats count by TargetFilename
 ```
 
-![PowerShell files](shots/task7-ps1-files.png)
+<img width="1568" height="750" alt="task7-ps1-files" src="https://github.com/user-attachments/assets/60e5da13-f631-4b96-9758-7f60af1a40ba" />
+
 
 ### Task 8: Time the initial access connection started
 
@@ -127,7 +136,8 @@ EventID=11 TargetFilename="*.ps1" | stats count by TargetFilename
 
 The `IncomingConnection` line in the TeamViewer log is stamped `2023/05/04 11:35:27.433`, which is the connection start. Two other values were not accepted: the router time in the log (10:35:58) and the same time converted to UTC (10:35:27). The system clock was tampered with during the attack (Task 10), so TeamViewer's local times do not line up with Sysmon's UTC times.
 
-![Session start](shots/task2-task8-teamviewer-session-start.png)
+<img width="1121" height="486" alt="task2-task8-teamviewer-session-start" src="https://github.com/user-attachments/assets/21f080da-349b-4bed-8dfe-5fb7ec4d4aac" />
+
 
 ### Task 10: How many times the PowerShell script changed the machine time
 
@@ -138,8 +148,8 @@ Security EventID `4616` is "the system time was changed" and records the process
 ```
 log="Security" EventID=4616 | stats count by ProcessName
 ```
+<img width="1911" height="988" alt="task10-4616-by-process" src="https://github.com/user-attachments/assets/2cc37af9-d183-4f4e-9cfe-f9fbd101618b" />
 
-![4616 by process](shots/task10-4616-by-process.png)
 
 ### Task 11: SID of the victim user
 
@@ -151,7 +161,7 @@ Filtering the Security log on `SubjectUserName=gladys` and grouping by `SubjectU
 log="Security" SubjectUserName=gladys | stats count by SubjectUserSid
 ```
 
-![Victim SID](shots/task11-victim-sid.png)
+<img width="1912" height="878" alt="task11-victim-sid" src="https://github.com/user-attachments/assets/8179abe7-4f01-43a1-ac9c-607b2cdccca0" />
 
 ## Summary
 

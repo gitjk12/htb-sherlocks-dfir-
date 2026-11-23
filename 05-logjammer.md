@@ -97,7 +97,6 @@ Defender EventID `1117` is "action taken". Grouping by threat name gave two resu
 ... EventID=1117 "Threat Name"="HackTool:MSIL/SharpHound!MSR"
 ```
 
-<img width="1914" height="741" alt="task5-threat-names" src="https://github.com/user-attachments/assets/f8e41b68-0326-4998-9534-6dc4c57fb41e" />
 
 
 <img width="1914" height="741" alt="task5-threat-names" src="https://github.com/user-attachments/assets/e52a0da7-c4d6-4e7a-8f2e-8c4707c5a138" />

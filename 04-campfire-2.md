@@ -21,7 +21,8 @@ Event 4768 with `PreAuthType=0` (pre-authentication not required) is the one tic
 source="security_events.jsonl" host="LAFRANCE" sourcetype="Campfire-2" EventID=4768 PreAuthType=0
 ```
 
-![task1-4-asrep-event-4768](shots/task1-4-asrep-event-4768.png)
+<img width="1915" height="887" alt="task1-4-asrep-event-4768" src="https://github.com/user-attachments/assets/39deccae-184b-4e8c-b8eb-0a8ce0b1b6fa" />
+
 
 **Task 2: Targeted account**
 Answer: `arthur.kyle`
@@ -44,8 +45,10 @@ source="security_events.jsonl" host="LAFRANCE" sourcetype="Campfire-2" "172.17.7
 | table SubjectUserName
 ```
 
-![task5-search-by-ip](shots/task5-search-by-ip.png)
-![tasks-completed](shots/tasks-completed.png)
+<img width="1913" height="899" alt="task5-search-by-ip" src="https://github.com/user-attachments/assets/2b2d7744-b4a0-4382-9845-99d7fb2964fc" />
+
+<img width="983" height="863" alt="tasks-completed" src="https://github.com/user-attachments/assets/074f3563-b9bf-4491-858b-26224d45d969" />
+
 
 ## Summary
 At 06:36:40 on 2024-05-29, a machine at `172.17.79.129` asked the domain controller for a ticket for `arthur.kyle`, an account with pre-authentication disabled, which is the AS-REP roasting technique. Other activity from that same machine ties the attack to the account `happy.grunwald`.

@@ -71,6 +71,7 @@ Security EventID `4719` is "system audit policy was changed" (14:50:03). The eve
 **Answer:** `Get-FileHash -Algorithm md5 .\Desktop\Automation-HTB.ps1`
 
 PowerShell EventID `4104` records script blocks. There are 381 events but only 28 distinct `ScriptBlockText` values. All of them were noise (Defender module code, the console `prompt`, and similar) except one single line, which was the command the user typed. It ran at 14:58:33. The `4103` events show the same command split into parameters.
+The other 4104 entries were not the answer. Most were Windows background code (the Defender module, the compatibility troubleshooter, the console prompt). A few were short AES-decrypt lines by the same user, but they ran on 24 March, not during the 27 March activity. I filtered by CyberJunkie's SID and compared timestamps, and only the Get-FileHash line at 14:58:33 fits the incident window.
 
 ```
 ... log="Powershell-Operational" EventID=4104

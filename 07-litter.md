@@ -27,12 +27,15 @@ Host **192.168.157.144** (DESKTOP-UMNCBE7, user `test`) ran **dnscat2 v0.07**, w
 ## Investigation
 1. **Statistics → Conversations → IPv4.** The .144 ↔ .145 pair stands out: 5,645 packets over ~2068 seconds, almost all DNS.
 
-   ![Conversations](07-litter-screenshots/conversations-ipv4.png)
+   <img width="1907" height="813" alt="conversations-ipv4" src="https://github.com/user-attachments/assets/654f3129-0ae8-4cf0-af99-111528ea92a8" />
+
 2. **Follow UDP Stream** (`udp.stream eq 430`). The query names are long hex strings under `microsofto365.com`, which points to a DNS tunnel. The first long query (frame 12184) marks where the session starts.
 
-   ![Tunnel start](07-litter-screenshots/tunnel-start-packets.png)
+   <img width="1911" height="694" alt="tunnel-start-packets" src="https://github.com/user-attachments/assets/cd5e95ef-7349-4ae2-9438-6cffa55bbbec" />
 
-   ![Follow UDP Stream](07-litter-screenshots/follow-udp-stream-430.png)
+
+  <img width="1762" height="684" alt="follow-udp-stream-430" src="https://github.com/user-attachments/assets/3fec03a8-88eb-491d-89b8-febd3422b70a" />
+
 3. **Decoding.** Follow Stream's ASCII view replaces binary bytes with dots, so it can't be decoded. Instead, the query names were extracted and decoded (the decoding was scripted):
    ```powershell
    tshark -r suspicious_traffic.pcap -Y "ip.src==192.168.157.144 && dns.flags.response==0 && dns.qry.name contains microsofto365" -T fields -e dns.qry.name
@@ -41,23 +44,29 @@ Host **192.168.157.144** (DESKTOP-UMNCBE7, user `test`) ran **dnscat2 v0.07**, w
 4. **Reading the session.**
    - Shell banner, then `whoami` → `desktop-umncbe7\test`.
 
-     ![whoami and dir](07-litter-screenshots/task3-whoami-dir.png)
+     <img width="1132" height="433" alt="task3-whoami-dir" src="https://github.com/user-attachments/assets/585c7223-f1b7-4ec3-85dd-d6770dcd8f3e" />
+
    - `dir` of Downloads shows `dnscat2-v0.07-client-win32.exe` (visible in the next screenshot).
    - Two failed `ren` attempts:
 
-     ![Failed ren](07-litter-screenshots/task5-failed-ren.png)
+     <img width="1078" height="396" alt="task5-failed-ren" src="https://github.com/user-attachments/assets/b6502636-fb71-47ca-acfd-fd76bb254d39" />
+
 
      Then a successful `ren dnscat2-v0.07-client-win32.exe win_installer.exe`.
 
-     ![ren command](07-litter-screenshots/task5-ren-command.png)
+    <img width="1074" height="193" alt="task5-ren-command" src="https://github.com/user-attachments/assets/9d61adff-ccb8-4827-bbda-f0bbd79e4fc8" />
+
    - `cd OneDrive` → `dir` returns 0 files.
 
-     ![OneDrive dir](07-litter-screenshots/task6-onedrive-dir.png)
+     <img width="1121" height="409" alt="task6-onedrive-dir" src="https://github.com/user-attachments/assets/7cf18619-1d1b-4773-b599-1cc753dfbad4" />
+
    - `type "...\client data optimisation\user details.csv"` dumps the CSV (rows 0–720 = 721 records: names, SSNs, addresses, emails, DOBs).
 
-     ![type user details.csv](07-litter-screenshots/task7-pii-file-type.png)
+     <img width="1116" height="387" alt="task7-pii-file-type" src="https://github.com/user-attachments/assets/e0578077-f775-48a3-920e-c30329988da1" />
 
-     ![Last PII record (720)](07-litter-screenshots/task8-pii-records-end.png)
+
+     <img width="1116" height="276" alt="task8-pii-records-end" src="https://github.com/user-attachments/assets/f5b83d6b-c9a3-476a-997c-f4247eafa2aa" />
+
    - The attacker then tried dnscat2's `download` command inside cmd. It failed (`'download' is not recognized`), but the data had already been exfiltrated through `type`.
 
 ## IOCs
@@ -79,4 +88,4 @@ Host **192.168.157.144** (DESKTOP-UMNCBE7, user `test`) ran **dnscat2 v0.07**, w
 ## Result
 All 8 tasks accepted.
 
-![HTB tasks complete](07-litter-screenshots/htb-tasks-complete.png)
+<img width="717" height="868" alt="htb-tasks-complete" src="https://github.com/user-attachments/assets/c735d2a6-dc41-45c6-9f18-3a115b9dfecb" />

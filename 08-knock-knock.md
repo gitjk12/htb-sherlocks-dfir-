@@ -57,33 +57,40 @@ On 2023-03-21, attacker **3.109.209.43** SYN-scanned Forela's internet-facing de
 
 `ip.src == 3.109.209.43 && tcp.flags.syn == 1 && tcp.flags.ack == 0`: first SYN at **10:42:23.708988** (frame 76081).
 
-![Scan start](08-knock-knock-screenshots/scan-start-syn.png)
+<img width="1913" height="525" alt="scan-start-syn" src="https://github.com/user-attachments/assets/e4988179-74f3-4dbe-ac9a-b715fd033cce" />
+
 
 `ip.addr == 3.109.209.43 && tcp.flags.syn == 1 && tcp.flags.ack == 1 && tcp.len == 0`: open ports **21, 22, 3306, 6379, 8086**.
 
-![Open ports](08-knock-knock-screenshots/open-ports-synack.png)
+<img width="1919" height="595" alt="open-ports-synack" src="https://github.com/user-attachments/assets/eeafff65-c11d-47f1-b812-08e5c59093b0" />
+
 
 ### 2. Initial access: FTP password spray (T1110.003)
 `ftp.request.command == "USER" || ftp.request.command == "PASS"` shows the attacker trying seasonal passwords (`Spring/Summer/Autumn/Winter` + 2021–2023 + `!`) across several users on port 21.
 
-![Spray attempts](08-knock-knock-screenshots/ftp-login-attempts-attacker.png)
+<img width="1918" height="1006" alt="ftp-login-attempts-attacker" src="https://github.com/user-attachments/assets/c35bb8d5-224b-4741-a83f-3c7071b50422" />
+
 
 Other IPs tried anonymous logins and common passwords against `www` on 2023-03-20/21. That's unrelated internet noise.
 
-![Other IPs](08-knock-knock-screenshots/ftp-other-ip-attempts.png)
+<img width="1919" height="468" alt="ftp-other-ip-attempts" src="https://github.com/user-attachments/assets/bc72c02a-5094-4ca8-8b45-1dd11603f6ca" />
+
 
 `ftp.response.code == 230` → Follow TCP Stream: **tony.shephard / Summer2023!** succeeded at 10:50:20 (vsFTPd 3.0.5).
 
-![FTP login success](08-knock-knock-screenshots/ftp-login-success-stream.png)
+<img width="1910" height="969" alt="ftp-login-success-stream" src="https://github.com/user-attachments/assets/8a4fb75e-8482-4582-a831-b2e1c4a2fc75" />
+
 
 ### 3. Loot from tony's FTP
 `ftp.request.command == "RETR"`: the attacker downloaded `.backup` and `fetch.sh`.
 
-![RETR](08-knock-knock-screenshots/ftp-retr-files.png)
+<img width="1911" height="930" alt="ftp-retr-files" src="https://github.com/user-attachments/assets/16667be8-486b-4d24-abd6-8ac29276c982" />
+
 
 File contents travel on passive-mode data ports, which the control stream announces in its `229 Entering Extended Passive Mode (|||port|)` replies. `tcp.port == 11365` → `.backup` is a **knockd** config. Knocking **29999 → 50234 → 45087** opens TCP **24456**, and a comment in the file leaks `abdullah.yasin:XhlhGame_90HJLDASxfd&hoooad`.
 
-![.backup](08-knock-knock-screenshots/ftp-data-backup-port.png)
+<img width="1917" height="1006" alt="ftp-data-backup-port" src="https://github.com/user-attachments/assets/359f2886-3ab0-4e0f-a07a-b174f02b9427" />
+
 
 `fetch.sh` (port 63669) contains hardcoded MySQL credentials: `tony.shephard` / `GameOfthronesRocks7865!` @ 3.13.65.234:3306.
 
@@ -92,9 +99,11 @@ The attacker then used the knock sequence (filter `tcp.port in {29999, 50234, 45
 ### 4. Hidden critical service: FTP on 24456
 Wireshark doesn't decode 24456 as FTP, so the session was read with `tcp.port == 24456 && tcp.len > 0` and Follow TCP Stream. `abdullah.yasin` logged in at **11:00:01**.
 
-![Hidden service USER/PASS](08-knock-knock-screenshots/critical-service-user-pass.png)
+<img width="1913" height="947" alt="critical-service-user-pass" src="https://github.com/user-attachments/assets/661e9687-2b05-4c82-8a69-6fd99ad85852" />
 
-![Hidden service login](08-knock-knock-screenshots/critical-service-login.png)
+
+<img width="1910" height="968" alt="critical-service-login" src="https://github.com/user-attachments/assets/56da23a0-79f6-430a-8edb-ecf815a36442" />
+
 
 The attacker then moved outside the FTP root (escaping the chroot jail) and downloaded these files:
 
@@ -107,36 +116,46 @@ The attacker then moved outside the FTP root (escaping the chroot jail) and down
 | `/etc/shadow` | n/a | Failed (550) |
 | `/opt/reminders/.reminder` | 44249 | "Clean up the github repo... sensitive data could have been leaked" |
 
-![AWS creds](08-knock-knock-screenshots/archived-sql-aws.png)
+<img width="733" height="626" alt="archived-sql-aws" src="https://github.com/user-attachments/assets/ce148238-f106-4ab0-a79b-1476efe99276" />
+
 
 The .docx was exported with Follow TCP Stream → Raw → Save as.
 
-![docx export](08-knock-knock-screenshots/tasks-docx-raw-export.png)
+<img width="1911" height="1006" alt="tasks-docx-raw-export" src="https://github.com/user-attachments/assets/1b7a66db-3795-4069-a55d-5b296ed3a11f" />
 
-![docx deadline](08-knock-knock-screenshots/tasks-docx-deadline.png)
 
-![reminder.txt](08-knock-knock-screenshots/reminder-txt.png)
+<img width="1411" height="738" alt="tasks-docx-deadline" src="https://github.com/user-attachments/assets/69cdc8f8-6fbd-4bca-9f44-3492e32465c3" />
 
-![.reminder](08-knock-knock-screenshots/opt-reminders-reminder.png)
+
+<img width="1912" height="1008" alt="reminder-txt" src="https://github.com/user-attachments/assets/bbe898fa-2d99-47c1-8881-4712b76ce441" />
+
+
+<img width="1916" height="870" alt="opt-reminders-reminder" src="https://github.com/user-attachments/assets/547e3f0e-ff73-4f90-8adf-3b2676f9025d" />
+
 
 ### 5. SSH access via GitHub leak (OSINT)
 `.reminder` pointed to GitHub. In the repo **forela-finance/forela-dev**, an early commit of `internal-dev.yaml` (an Ansible playbook) hardcoded `ssh_password` for **cyberjunkie**. A later commit replaced it with `{{ ssh_password }}`, but the password stayed in the commit history. SSH is encrypted, so the login itself isn't readable in the pcap.
 
-![GitHub leak](08-knock-knock-screenshots/github-leaked-ssh-password.png)
+<img width="644" height="822" alt="github-leaked-ssh-password" src="https://github.com/user-attachments/assets/5f686796-e370-41e2-961f-83918e0b70ca" />
+
 
 ### 6. Ransomware download
 `http.request && ip.src == 172.31.39.46` → at **11:42:34** (frame 213543), `Wget/1.21.2` downloaded
 `http://13.233.179.35/PKCampaign/Targets/Forela/Ransomware2_server.zip`. The other requests in this view are normal EC2 metadata and apt traffic.
 
-![Ransomware download](08-knock-knock-screenshots/ransomware-download-http.png)
+<img width="1915" height="931" alt="ransomware-download-http" src="https://github.com/user-attachments/assets/a0113832-b87c-491d-8471-2d23e3c8a9fe" />
+
 
 The zip was exported with File → Export Objects → HTTP and hashed. Its SHA256 matched VirusTotal (37/66 detections), and its 96 bundled files all sit under `src/GonnaCry/`, so the ransomware is **GonnaCry**, an open-source Linux ransomware.
 
-![SHA256](08-knock-knock-screenshots/ransomware-sha256-powershell.png)
+<img width="1110" height="164" alt="ransomware-sha256-powershell" src="https://github.com/user-attachments/assets/508451b1-9a3d-4686-995e-76da9ae03939" />
 
-![VirusTotal](08-knock-knock-screenshots/virustotal-details.png)
 
-![GonnaCry files](08-knock-knock-screenshots/virustotal-relations-gonnacry.png)
+<img width="1900" height="984" alt="virustotal-details" src="https://github.com/user-attachments/assets/1c7f2480-e398-463c-9184-e87fa9b686eb" />
+
+
+<img width="1917" height="943" alt="virustotal-relations-gonnacry" src="https://github.com/user-attachments/assets/f59531cb-6167-4529-b470-ddc619052861" />
+
 
 ## IOCs
 - Attacker: `3.109.209.43`
